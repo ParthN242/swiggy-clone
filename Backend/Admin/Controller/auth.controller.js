@@ -64,7 +64,7 @@ exports.adminProfile = async (req, res, next) => {
 exports.adminLogout = async (req, res, next) => {
   try {
     const option = {
-      expires: new Date(Date.now()),
+      expires: new Date(Date.now() - 10000),
       httpOnly: true,
       sameSite: "None",
       secure: true,
