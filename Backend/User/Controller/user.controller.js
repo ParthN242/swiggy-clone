@@ -78,11 +78,10 @@ exports.userLogout = async (req, res, next) => {
     const option = {
       expires: new Date(Date.now() - 10000),
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "Lax",
       secure: true,
     };
     res.clearCookie("token", option);
-    res.end();
     res.status(200).json({ success: true, message: "Sign Out Successfully" });
   } catch (error) {
     console.log("error: ", error);
