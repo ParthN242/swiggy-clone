@@ -57,7 +57,7 @@ exports.userLogin = async (req, res, next) => {
     const option = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "Strict",
       secure: true,
     };
 
@@ -78,10 +78,10 @@ exports.userLogout = async (req, res, next) => {
     const option = {
       expires: new Date(Date.now() - 10000),
       httpOnly: true,
-      sameSite: "Lax",
+      sameSite: "Strict",
       secure: true,
     };
-    // res.clearCookie("token", option);
+    res.clearCookie("token", option);
     res.cookie("token", "", option);
     res.status(200).json({ success: true, message: "Sign Out Successfully" });
   } catch (error) {
