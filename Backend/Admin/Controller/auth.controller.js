@@ -67,7 +67,7 @@ exports.adminLogout = async (req, res, next) => {
       expires: new Date(Date.now()),
       httpOnly: true,
       sameSite: "None",
-      secure: false,
+      secure: true,
     };
     res.clearCookie("admin-token", option);
     res.status(200).json({ success: true, message: "Sign Out Successfully" });
