@@ -57,7 +57,7 @@ exports.userLogin = async (req, res, next) => {
     const option = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
-      sameSite: "Strict",
+      sameSite: "None",
       secure: true,
     };
 
@@ -78,7 +78,7 @@ exports.userLogout = async (req, res, next) => {
     const option = {
       expires: new Date(Date.now() - 10000),
       httpOnly: true,
-      sameSite: "Strict",
+      sameSite: "None",
       secure: true,
     };
     res.clearCookie("token", option);
