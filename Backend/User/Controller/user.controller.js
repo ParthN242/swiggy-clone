@@ -82,6 +82,7 @@ exports.userLogout = async (req, res, next) => {
       secure: true,
     };
     res.clearCookie("token", option);
+    res.end();
     res.status(200).json({ success: true, message: "Sign Out Successfully" });
   } catch (error) {
     console.log("error: ", error);
