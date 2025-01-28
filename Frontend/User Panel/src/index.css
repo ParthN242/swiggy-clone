@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "proxi";
+  src: url("../fonts/ProximaNovaCond-Black.woff2");
+}
+
+@font-face {
+  font-family: "gil-bold";
+  src: url("../fonts/Gilroy-Bold-Rupee.woff2");
+}
+
+@font-face {
+  font-family: "gil-ex-bold";
+  src: url("../fonts/Gilroy-ExtraBold-Rupee.woff2");
+}
+
+@font-face {
+  font-family: "gil-medium";
+  src: url("../fonts/Gilroy-Medium-Rupee.woff2");
+}
+
+@font-face {
+  font-family: "gil-semi-bold";
+  src: url("../fonts/Gilroy-SemiBold-Rupee.woff2");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "gil-medium", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+a {
+  font-weight: 500;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(235, 80, 14, 0.548);
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: rgba(232, 205, 154, 0.366);
+  border-radius: 20px;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
