@@ -18,7 +18,7 @@ app.use(
     origin: isProduction
       ? [
           "https://swiggy-clone-user.vercel.app",
-          "https://swiggy-clone-phi-six.vercel.app",
+          "https://swiggy-clone-admin.vercel.app",
         ]
       : true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
