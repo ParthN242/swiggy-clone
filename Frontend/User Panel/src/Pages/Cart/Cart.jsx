@@ -12,7 +12,6 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, cart, isAddressModelOpen } = useSelector((state) => state.app);
-  console.log("cart: ", cart);
 
   const { resDetail, cartItems } = cart;
 
@@ -264,7 +263,7 @@ const Cart = () => {
                       Choose Payment method
                     </h2>
                     <h3 className="text-sm text-[#7f828f]">
-                      Credit &amp; Debit cards, UPI or Cash on Delivery
+                      Credit &amp; Debit cards on Delivery
                     </h3>
                     <div
                       className="my-4 bg-[#60b246] py-3 text-white font-bold text-center cursor-pointer hover:shadow-[0px_2PX_8PX_#d4d5d9] tracking-wider"

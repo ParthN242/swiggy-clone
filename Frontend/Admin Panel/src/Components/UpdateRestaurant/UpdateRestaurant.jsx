@@ -22,7 +22,7 @@ const UpdateRestaurant = () => {
       navigate("/restaurant");
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while updating restaurant");
     }
   };
 
@@ -34,7 +34,7 @@ const UpdateRestaurant = () => {
         setLoading(false);
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error.message);
+        toast.error("Error while fetching restaurant details");
       }
     };
     fetchRestaurantsDetail();
@@ -42,7 +42,11 @@ const UpdateRestaurant = () => {
 
   return (
     <section className="flex flex-col max-h-screen">
-      <AdminHeader pageTitle={"Update Restaurant"} />
+      <AdminHeader
+        pageTitle={"Update Restaurant"}
+        isBackNavigation
+        navigationUrl={"/restaurant"}
+      />
       {loading ? (
         "Loading"
       ) : (

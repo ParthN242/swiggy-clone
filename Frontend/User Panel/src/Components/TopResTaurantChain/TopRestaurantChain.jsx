@@ -31,7 +31,7 @@ const TopRestaurantChain = () => {
           restaurants.map((res) => (
             <Link
               to={`/restaurant/${res._id}`}
-              className="min-w-[250px] max-md:min-w-[136px] flex flex-col gap-2 hover:scale-[0.98] transition-all duration-100 ease-out"
+              className="min-w-[250px] max-md:min-w-[160px] flex flex-col gap-2 hover:scale-[0.98] transition-all duration-100 ease-out"
               key={res._id}
             >
               <div className="relative w-full h-[180px] max-md:h-40 ">

@@ -14,7 +14,7 @@ const RestaurantCard = ({ res }) => {
       toast.success("Restaurant deleted successfully");
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while deleting restaurant");
     }
     setOpenDeleteModel(false);
   };

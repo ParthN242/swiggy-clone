@@ -5,7 +5,8 @@ exports.getAllUsersOrders = async (req, res, next) => {
   try {
     const orders = await Order.find()
       .populate("resDetail")
-      .populate("cartItems.food");
+      .populate("cartItems.food")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({ success: true, orders });
   } catch (error) {

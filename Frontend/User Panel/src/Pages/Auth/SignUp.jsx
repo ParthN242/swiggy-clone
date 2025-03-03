@@ -20,7 +20,7 @@ const SignUp = ({ setIsLogin }) => {
       setIsLogin(true);
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while sign up");
     }
   };
 

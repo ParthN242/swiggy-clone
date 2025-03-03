@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { setUser } from "../../Redux/appSlice";
 import Orders from "../../Components/Orders/Orders";
+import Profile from "../../Components/Profile/Profile";
 
 const MyAccount = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const MyAccount = () => {
       navigate("/");
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while sign out");
     }
   };
 
@@ -35,7 +36,7 @@ const MyAccount = () => {
     if (!user) {
       return navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <>
@@ -60,9 +61,9 @@ const MyAccount = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full bg-white p-8 max-lg:p-3 flex gap-4">
+            <div className="w-full h-screen bg-white p-8 max-lg:p-3 flex gap-4">
               {/* Aside */}
-              <aside className="bg-[#edf1f7] min-w-[240px] max-lg:hidden flex flex-col py-6 pl-[20px]">
+              <aside className="bg-[#edf1f7] min-w-[240px] max-lg:hidden flex flex-col gap-4 py-6 pl-[20px]">
                 <NavLink
                   to={"/my-account/orders"}
                   className={({ isActive }) =>
@@ -73,13 +74,21 @@ const MyAccount = () => {
                 >
                   Orders
                 </NavLink>
-                {/* <button className="py-4 pr-12 pl-10 font-semibold text-left hover:bg-white">
+                <NavLink
+                  to={"/my-account/profile"}
+                  className={({ isActive }) =>
+                    `${
+                      isActive ? "bg-white " : ""
+                    } py-4 pr-12 pl-10 font-semibold text-left hover:bg-white`
+                  }
+                >
                   Profile
-                </button> */}
+                </NavLink>
               </aside>
-              <div className="flex-1 bg-white">
+              <div className="flex-1 bg-white overflow-auto">
                 <Routes>
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/profile" element={<Profile />} />
                 </Routes>
               </div>
             </div>

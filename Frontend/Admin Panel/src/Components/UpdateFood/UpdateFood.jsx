@@ -25,15 +25,15 @@ const UpdateFood = () => {
         }
       );
       toast.promise(updateFoodPromise, {
-        pending: "Adding Food Item",
-        success: "Food Item Added",
-        error: "Error while adding Food Item",
+        pending: "Updating Food Item",
+        success: "Food Item Update",
+        error: "Error while updating Food Item",
       });
-      const { data } = await updateFoodPromise;
+      await updateFoodPromise;
       navigate(`/restaurant/${resId}`);
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while updating food item");
     }
   };
 
@@ -45,7 +45,7 @@ const UpdateFood = () => {
         setLoading(false);
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error.message);
+        toast.error("Error while fetching food items");
       }
     };
     fetchFoodItem();

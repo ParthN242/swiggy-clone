@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import moment from "moment";
 import DeleteModel from "../DeleteModel/DeleteModel";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const OrderCard = ({ order }) => {
   const { _id, status, resDetail, cartItems, totalPayment, createdAt } = order;
-
+  const currentDate = new Date();
   const [openDeleteModel, setOpenDeleteModel] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(
+    moment(currentDate).diff(moment(createdAt), "seconds")
+  );
+  const cancelTime = 30;
+
+  useEffect(() => {
+    if (timeLeft > cancelTime) return;
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
 
   const deleteOrderHandler = async () => {
     try {
@@ -70,14 +91,20 @@ const OrderCard = ({ order }) => {
               {moment(createdAt).format("DD-MM-YYYY")}
             </div>
           </div>
-          {status !== "Canceled" && (
-            <button
-              onClick={() => setOpenDeleteModel(true)}
-              className="border-2 text-nowrap border-red-500 mt-auto w-full py-2 px-4 max-md:py-1 max-md:px-2 rounded-lg text-red-500 text-[14px] max-md:text-[12px] hover:bg-red-500 hover:text-white transition-all duration-200"
-            >
-              Cancel Order
-            </button>
-          )}
+          {status !== "Canceled" &&
+            status !== "Delivered" &&
+            timeLeft < cancelTime &&
+            timeLeft !== 0 && (
+              <>
+                <div>{timeLeft > 0 && `0:${timeLeft}`}</div>
+                <button
+                  onClick={() => setOpenDeleteModel(true)}
+                  className="border-2 text-nowrap border-red-500 mt-auto w-full py-2 px-4 max-md:py-1 max-md:px-2 rounded-lg text-red-500 text-[14px] max-md:text-[12px] hover:bg-red-500 hover:text-white transition-all duration-200"
+                >
+                  Cancel Order
+                </button>
+              </>
+            )}
         </div>
       </div>
       {/* Bottom */}

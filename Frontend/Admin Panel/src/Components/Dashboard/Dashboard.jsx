@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "../Header/AdminHeader";
 import DashboardCard from "./DashboardCard";
 import { toast } from "react-toastify";
@@ -25,11 +25,13 @@ const Dashboard = () => {
   return (
     <div>
       <AdminHeader pageTitle={"Dashboard"} />
-      <div className="max-h-full px-8 py-4 flex items-center justify-between gap-4 flex-wrap">
-        {cardDetail.length > 0 &&
-          cardDetail.map(([key, value], index) => (
-            <DashboardCard key={index} title={key} value={value} />
-          ))}
+      <div className="max-h-full px-8 py-4 ">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          {cardDetail.length > 0 &&
+            cardDetail.map(([key, value], index) => (
+              <DashboardCard key={index} title={key} value={value} />
+            ))}
+        </div>
       </div>
     </div>
   );

@@ -15,12 +15,14 @@ const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
-    origin: isProduction
-      ? [
-          "https://swiggy-clone-user.vercel.app",
-          "https://swiggy-clone-admin.vercel.app",
-        ]
-      : true,
+    origin:
+      //  isProduction
+      //   ? [
+      //       "https://swiggy-clone-user.vercel.app",
+      //       "https://swiggy-clone-admin.vercel.app",
+      //     ]
+      //   :
+      true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: true,
     optionsSuccessStatus: 204,

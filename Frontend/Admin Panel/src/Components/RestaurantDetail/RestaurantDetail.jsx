@@ -28,7 +28,11 @@ const RestaurantDetail = () => {
 
   return (
     <div className="flex flex-col max-h-screen">
-      <AdminHeader pageTitle={resDetail.name} />
+      <AdminHeader
+        pageTitle={resDetail.name}
+        isBackNavigation
+        navigationUrl={"/restaurant"}
+      />
       {loading ? (
         "Loading"
       ) : (
@@ -134,7 +138,7 @@ const RestaurantDetail = () => {
                   return <Item key={food._id} food={food} />;
                 })}
               {resDetail.foods.length < 1 && (
-                <div className="text-center mt-12 text-3xl font-semibold text-slate-600/60">
+                <div className="text-center my-12 text-3xl font-semibold text-slate-600/60">
                   No Food Item Added
                 </div>
               )}

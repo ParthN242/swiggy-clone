@@ -28,7 +28,7 @@ const Address = () => {
       dispatch(setUser(data.user));
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while updating address");
     }
   };
 
@@ -56,9 +56,9 @@ const Address = () => {
         {/* Address Form */}
         <form onSubmit={handleUpdateAddress}>
           <div className="">
-            <div class="relative z-0 border-slate-300 border px-6 py-3">
+            <div className="relative z-0 border-slate-300 border px-6 py-3">
               <label
-                for="address"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700"
               >
                 Address
@@ -74,9 +74,9 @@ const Address = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <div class="relative z-0 border-slate-300 border px-6 py-3">
+            <div className="relative z-0 border-slate-300 border px-6 py-3">
               <label
-                for="address"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700"
               >
                 Area Name
@@ -91,9 +91,9 @@ const Address = () => {
                 onChange={(e) => setAreaName(e.target.value)}
               />
             </div>
-            <div class="relative z-0 border-slate-300 border px-6 py-3">
+            <div className="relative z-0 border-slate-300 border px-6 py-3">
               <label
-                for="address"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700"
               >
                 city

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "../Slider/Slider";
 import { data } from "./data";
 
@@ -12,11 +12,31 @@ const ShowCaseFood = () => {
     }
   }, [sliderRef]);
 
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const scrollAmount = 150;
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
+        direction = -1;
+      } else if (slider.scrollLeft <= 0) {
+        // direction = 1;
+        slider.scrollLeft = 0;
+      }
+      slider.scrollLeft += scrollAmount * direction;
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="p-4 max-md:p-2">
       <div className="flex items-center justify-between mb-4 max-md:mb-2">
         <h4 className="text-[22px] max-md:text-[20px] font-[gil-bold]">
-          What's on your mind?
+          What&apos;s on your mind?
         </h4>
         <Slider element={currentSlider} />
       </div>

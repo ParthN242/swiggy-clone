@@ -36,13 +36,23 @@ const Header = () => {
           <img
             src="/web-logo.png"
             alt="logo"
-            className="w-[60px] max-sm:w-[70px]"
+            className="w-[60px] max-md:w-[50px] max-sm:w-[45px]"
           />
         </Link>
         {/* <div>
           <p className="font-bold underline">Other</p>
         </div> */}
         <ul className="flex flex-1 justify-end items-center gap-16 max-md:gap-10 mr-4 ">
+          <li className="max-sm:hidden">
+            <Link
+              to={"/"}
+              className="flex items-center gap-[12px] max-md:gap-[5px] text-light-black font-medium text-[16px] max-sm:text-[12px] group"
+            >
+              <p className="group-hover:text-[#FF5B0E] text-[16px] max-sm:text-[12px]">
+                Home
+              </p>
+            </Link>
+          </li>
           <li className="max-sm:hidden">
             <Link
               to={"/search"}

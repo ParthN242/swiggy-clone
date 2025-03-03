@@ -13,9 +13,9 @@ const OnlineRestaurant = () => {
         </h4>
       </div>
       <div className="mb-4 flex items-center gap-2">
-        <div className="py-2 px-3 border border-[rgba(2, 6, 12, 0.15)] rounded-[18px] text-[#02060cbf]">
+        {/* <div className="py-2 px-3 border border-[rgba(2, 6, 12, 0.15)] rounded-[18px] text-[#02060cbf]">
           Filter
-        </div>
+        </div> */}
       </div>
       <div className="grid grid-cols-4 max-md:grid-cols-2 gap-6 max-md:gap-y-8 max-md:gap-4 max-w-full scrollbar-none">
         {restaurants.length > 0 &&
@@ -25,7 +25,7 @@ const OnlineRestaurant = () => {
               className={`w-full flex flex-col gap-4 hover:scale-[0.98] transition-all duration-100 ease-out`}
               key={res._id}
             >
-              <div className="relative w-full h-[135px]">
+              <div className="relative w-full h-[135px] max-md:h-[210px]">
                 <img
                   className="w-full h-full object-cover rounded-2xl"
                   src={res.image}

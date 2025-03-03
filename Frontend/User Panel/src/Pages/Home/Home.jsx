@@ -19,7 +19,7 @@ const Home = () => {
         dispatch(setRestaurants(data.restaurants));
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error.message);
+        toast.error("Error while fetching restaurants details");
       }
     };
     fetchAllRestaurants();

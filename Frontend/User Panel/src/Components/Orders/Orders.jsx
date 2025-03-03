@@ -1,19 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import DeleteModel from "../DeleteModel/DeleteModel";
 import OrderCard from "../OrderCard/OrderCard";
 
 const Orders = () => {
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.app);
 
   const [orders, setOrders] = useState([]);
-
-  if (!user) {
-    return navigate("/");
-  }
 
   useEffect(() => {
     const fetchMyOrders = async () => {
@@ -27,6 +23,10 @@ const Orders = () => {
     };
     fetchMyOrders();
   }, []);
+
+  if (!user) {
+    return navigate("/");
+  }
 
   return (
     <div className="w-full relative">
@@ -47,7 +47,7 @@ const Orders = () => {
           </div>
         )}
         {orders.map((order) => (
-          <OrderCard order={order} />
+          <OrderCard key={order._id} order={order} />
         ))}
       </div>
     </div>

@@ -65,7 +65,7 @@ const RestaurantMenu = () => {
         setResMenu(data.restaurant.foods);
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error.message);
+        toast.error("Error while fetching restaurant detail");
       }
     };
 

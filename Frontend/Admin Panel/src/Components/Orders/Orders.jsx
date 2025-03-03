@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "../Header/AdminHeader";
 import { toast } from "react-toastify";
 import moment from "moment";
@@ -9,16 +9,16 @@ const Orders = () => {
 
   const handleUpdateStatus = async (e, _id) => {
     try {
-      const statusUpate = e.target.value;
-      const { data } = await axios.put(`/order/${_id}`, {
-        status: statusUpate,
+      const statusUpdate = e.target.value;
+      await axios.put(`/order/${_id}`, {
+        status: statusUpdate,
       });
       setOrders(
         orders.map((o) => {
           if (o._id === _id) {
-            console.log({ ...o, status: statusUpate });
+            console.log({ ...o, status: statusUpdate });
 
-            return { ...o, status: statusUpate };
+            return { ...o, status: statusUpdate };
           } else {
             return o;
           }
@@ -32,7 +32,7 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    const fethAllUsersOrders = async () => {
+    const fetchAllUsersOrders = async () => {
       try {
         const { data } = await axios.get("/order");
 
@@ -42,7 +42,7 @@ const Orders = () => {
         toast.error("Error while fetching orders");
       }
     };
-    fethAllUsersOrders();
+    fetchAllUsersOrders();
   }, []);
 
   return (
@@ -78,37 +78,52 @@ const Orders = () => {
                     </p>
                     <p className="text-sm">ORDERS #{_id}</p>
                     <div>
-                      <button className="text-[12px] leading-normal text-orange-400">
+                      {/* <button className="text-[12px] leading-normal text-orange-400">
                         View Details
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                   <div className="flex flex-col items-center">
                     {/* Status */}
-                    <select
-                      name="status"
-                      id="status"
-                      className={`${
-                        status === "Preparing"
-                          ? "bg-[#007BFF]"
-                          : status === "On the Way"
-                          ? "bg-[#FFA500]"
-                          : status === "Delivered"
-                          ? "bg-green-500"
-                          : ""
-                      } py-2 px-4 rounded-lg text-white text-[14px] mb-4 outline-none *:bg-white *:text-black *:outline-none`}
-                      defaultValue={status}
-                      onChange={(e) => handleUpdateStatus(e, _id)}
-                    >
-                      {status !== "On the Way" && status !== "Delivered" && (
-                        <option value="Preparing">Preparing</option>
-                      )}
-                      {status !== "Delivered" && (
-                        <option value="On the Way">On the Way</option>
-                      )}
+                    {status === "Confirmed" && (
+                      <button
+                        className="bg-cyan-500 py-2 px-4 rounded-lg text-white text-[14px] mb-4 outline-none *:bg-white *:text-black *:outline-none"
+                        value={"Preparing"}
+                        onClick={(e) => handleUpdateStatus(e, _id)}
+                      >
+                        Confirmed
+                      </button>
+                    )}
+                    {status !== "Canceled" ? (
+                      <select
+                        name="status"
+                        id="status"
+                        className={`${
+                          status === "Preparing"
+                            ? "bg-[#007BFF]"
+                            : status === "On the Way"
+                            ? "bg-[#FFA500]"
+                            : status === "Delivered"
+                            ? "bg-green-500"
+                            : ""
+                        } py-2 px-4 rounded-lg text-white text-[14px] mb-4 outline-none *:bg-white *:text-black *:outline-none`}
+                        defaultValue={status}
+                        onChange={(e) => handleUpdateStatus(e, _id)}
+                      >
+                        {status !== "On the Way" && status !== "Delivered" && (
+                          <option value="Preparing">Preparing</option>
+                        )}
+                        {status !== "Delivered" && (
+                          <option value="On the Way">On the Way</option>
+                        )}
 
-                      <option value="Delivered">Delivered</option>
-                    </select>
+                        <option value="Delivered">Delivered</option>
+                      </select>
+                    ) : (
+                      <button className="bg-red-500 py-2 px-4 rounded-lg text-white text-[14px] mb-4 outline-none *:bg-white *:text-black *:outline-none">
+                        Canceled
+                      </button>
+                    )}
                     <div className="text-[14px]">
                       {moment(createdAt).format("DD-MM-YYYY")}
                     </div>

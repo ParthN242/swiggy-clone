@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "../Dashboard/Dashboard";
 import AddFood from "../AddFood/AddFood";
 import UpdateFood from "../UpdateFood/UpdateFood";

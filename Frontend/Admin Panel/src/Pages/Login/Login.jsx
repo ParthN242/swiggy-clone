@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LoginImage from "../../Assets/admin-login.jpg";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,7 +23,7 @@ const Login = () => {
       dispatch(authSuccess(data.admin));
     } catch (error) {
       console.log("error: ", error);
-      toast.error("error");
+      toast.error("Invalid credentials");
     }
   };
 
@@ -31,7 +31,7 @@ const Login = () => {
     if (auth.admin) {
       navigate("/");
     }
-  }, [auth]);
+  }, [auth, navigate]);
 
   return (
     <div

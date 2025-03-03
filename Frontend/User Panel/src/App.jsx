@@ -43,7 +43,7 @@ const App = () => {
       };
       fetchUserProfile();
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <div className="relative">

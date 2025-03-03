@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authSuccess } from "../../redux/appSlice";
+import { LuMoveLeft } from "react-icons/lu";
 
-const AdminHeader = ({ pageTitle }) => {
+const AdminHeader = ({ pageTitle, isBackNavigation, navigationUrl }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,7 +28,17 @@ const AdminHeader = ({ pageTitle }) => {
       to="/"
       className="flex items-center justify-between px-6 py-6 pb-4 border-b-2 border-red-200 w-full"
     >
-      <h1 className="text-textColor text-xl font-bold">{pageTitle}</h1>
+      <div className="flex gap-4 items-center">
+        {isBackNavigation && (
+          <Link
+            to={navigationUrl}
+            className="text-xl p-2 hover:bg-slate-200 rounded-full"
+          >
+            <LuMoveLeft />
+          </Link>
+        )}
+        <h1 className="text-textColor text-xl font-bold">{pageTitle}</h1>
+      </div>
       <div className="flex items-center gap-2 text-red-500">
         <div
           className="text-xl p-2 text-slate-800 hover:bg-slate-200 mr-4 rounded-full"

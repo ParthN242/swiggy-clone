@@ -28,11 +28,11 @@ const AddFood = () => {
         success: "Food Item Added",
         error: "Error while adding Food Item",
       });
-      const { data } = await addFoodPromise;
+      await addFoodPromise;
       navigate(`/restaurant/${resId}`);
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while adding food");
     }
   };
   return (

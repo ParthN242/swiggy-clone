@@ -89,7 +89,7 @@ const CheckOutForm = () => {
       console.log(result.paymentIntent.paymentStatus);
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while payment");
     } finally {
       setProcessing(false);
     }

@@ -24,7 +24,7 @@ const App = () => {
         dispatch(authSuccess(data.admin));
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error);
+        // toast.error(error);
         dispatch(authFailure());
       }
     };

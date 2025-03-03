@@ -19,7 +19,7 @@ const User = () => {
         setLoading(false);
       } catch (error) {
         console.log("error: ", error);
-        toast.error(error.message);
+        toast.error("Error while fetching users details");
       }
     };
     fetchAllUsers();
@@ -50,7 +50,7 @@ const UserCard = ({ userData }) => {
       toast.success("User deleted successfully");
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while deleting user");
     }
     setOpenDeleteModel(false);
   };

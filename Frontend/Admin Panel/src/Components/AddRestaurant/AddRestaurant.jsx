@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import RestaurantForm from "../RestaurantForm/RestaurantForm";
 import { useNavigate } from "react-router-dom";
+import Restaurant from "./../Restaurant/Restaurant";
 
 const AddRestaurant = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const AddRestaurant = () => {
 
     const toastId = toast.loading("Adding Restaurant");
     try {
-      const { data } = await axios.post("/restaurant", formData, {
+      await axios.post("/restaurant", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       navigate("/restaurant");
@@ -43,12 +44,16 @@ const AddRestaurant = () => {
       });
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error while adding Restaurant");
     }
   };
   return (
     <section className="flex flex-col max-h-screen">
-      <AdminHeader pageTitle={"Add Restaurant"} />
+      <AdminHeader
+        pageTitle={"Add Restaurant"}
+        isBackNavigation
+        navigationUrl={"/restaurant"}
+      />
       <RestaurantForm submitHandler={addRestaurantHandler} />
     </section>
   );
