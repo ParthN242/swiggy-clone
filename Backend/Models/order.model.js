@@ -51,8 +51,16 @@ const orderSchema = mongoose.Schema(
     //   type: String,
     //   required: true,
     // },
-  },
-  { timestamps: true }
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now(),
+    },
+  }
+  // { timestamps: true }
 );
 
 const orderModel =

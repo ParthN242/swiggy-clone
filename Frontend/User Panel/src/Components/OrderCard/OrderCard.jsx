@@ -12,7 +12,8 @@ const OrderCard = ({ order }) => {
   const [timeLeft, setTimeLeft] = useState(
     moment(currentDate).diff(moment(createdAt), "seconds")
   );
-  const cancelTime = 30;
+  const cancelTime = 60;
+  console.log("timeLeft: ", timeLeft, " ", _id);
 
   useEffect(() => {
     if (timeLeft > cancelTime) return;
@@ -70,7 +71,11 @@ const OrderCard = ({ order }) => {
         <div className="flex flex-col items-center justify-between">
           <div className="w-full">
             {/* Status */}
-            {status === "Preparing" ? (
+            {status === "Confirmed" ? (
+              <button className="bg-cyan-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+                Confirming
+              </button>
+            ) : status === "Preparing" ? (
               <button className="bg-[#007BFF] w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
                 Preparing
               </button>
