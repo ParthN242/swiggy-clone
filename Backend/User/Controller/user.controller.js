@@ -243,7 +243,7 @@ exports.createOrder = async (req, res, next) => {
       user: user._id,
       paymentId,
       paymentStatus,
-      status: "Preparing",
+      status: "Confirmed",
       totalPayment,
     });
 

@@ -62,7 +62,7 @@ const OnlineRestaurant = () => {
                 </div>
                 {/* Info */}
                 <div>
-                  <p className="font-[gil-bold] text-lg max-md:text-[16px] max-md:leading-[19px] truncate bg-slate-200 text-slate-200 rounded-2xl">
+                  <p className="font-[gil-bold] text-lg max-md:text-[16px] max-md:leading-[19px] truncate bg-slate-200 text-slate-200 rounded-2xl mb-1">
                     ..
                   </p>
                   <div className="flex items-center gap-1 bg-slate-200 text-slate-200 rounded-2xl">
