@@ -25,7 +25,13 @@ const allowedOrigins = [
 
 const io = socketIo(server, {
   cors: {
-    origin: isProduction ? allowedOrigins : "*",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
     allowedHeaders: ["Authorization", "Content-Type"],
     credentials: true,
@@ -49,7 +55,13 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: isProduction ? allowedOrigins : true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: true,
     optionsSuccessStatus: 204,
