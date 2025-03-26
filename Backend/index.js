@@ -16,14 +16,17 @@ const app = express();
 
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  "https://swiggy-clone-user.vercel.app",
+  "https://swiggy-clone-admin.vercel.app",
+];
+
 const io = socketIo(server, {
   cors: {
-    origin: isProduction
-      ? [
-          "https://swiggy-clone-user.vercel.app",
-          "https://swiggy-clone-admin.vercel.app",
-        ]
-      : "*",
+    origin: isProduction ? allowedOrigins : "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+    credentials: true,
   },
 });
 
@@ -46,12 +49,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
-    origin: isProduction
-      ? [
-          "https://swiggy-clone-user.vercel.app",
-          "https://swiggy-clone-admin.vercel.app",
-        ]
-      : true,
+    origin: isProduction ? allowedOrigins : true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     preflightContinue: true,
     optionsSuccessStatus: 204,

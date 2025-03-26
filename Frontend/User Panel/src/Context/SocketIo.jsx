@@ -10,7 +10,9 @@ const SocketIo = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const newSocket = io(import.meta.env.VITE_SOCKET_URL);
+    const newSocket = io(import.meta.env.VITE_SOCKET_URL, {
+      withCredentials: true,
+    });
 
     setSocket(newSocket);
 
