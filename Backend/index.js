@@ -18,7 +18,12 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin: isProduction
+      ? [
+          "https://swiggy-clone-user.vercel.app",
+          "https://swiggy-clone-admin.vercel.app",
+        ]
+      : "*",
   },
 });
 
