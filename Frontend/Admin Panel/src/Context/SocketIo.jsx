@@ -8,10 +8,13 @@ const SocketIo = ({ children }) => {
 
   useEffect(() => {
     const newSocket = io(import.meta.env.VITE_SOCKET_URL, {
+      transports: ["websocket"],
       withCredentials: true,
     });
 
     setSocket(newSocket);
+
+    newSocket.on("connect_error", (err) => console.log("Socket Error:", err));
 
     return () => {
       newSocket.disconnect();
