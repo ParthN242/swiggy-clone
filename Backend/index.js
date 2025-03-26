@@ -16,6 +16,8 @@ const app = express();
 
 const server = http.createServer(app);
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const allowedOrigins = [
   "https://swiggy-clone-user.vercel.app",
   "https://swiggy-clone-admin.vercel.app",
@@ -44,8 +46,6 @@ io.on("connection", (socket) => {
     console.log("socket disconnected");
   });
 });
-
-const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
