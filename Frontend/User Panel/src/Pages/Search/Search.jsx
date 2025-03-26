@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import ShowCaseFood from "../../Components/ShowCaseFood/ShowCaseFood";

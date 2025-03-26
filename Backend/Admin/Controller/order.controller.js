@@ -1,4 +1,5 @@
 const Order = require("../../Models/order.model");
+const { userSocketId } = require("../../store/socketStore.js");
 
 // Get all user orders
 exports.getAllUsersOrders = async (req, res, next) => {
@@ -25,6 +26,15 @@ exports.updateOrderStatus = async (req, res, next) => {
       { status },
       { new: true }
     );
+
+    const io = req.app.get("io");
+
+    if (io) {
+      io.to(userSocketId.get(order.user.toString())).emit(
+        "order-status-updated",
+        order
+      );
+    }
 
     return res.status(200).json({ success: true, order });
   } catch (error) {

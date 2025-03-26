@@ -4,12 +4,38 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cloudinary = require("cloudinary").v2;
-const app = express();
 const dbConnection = require("./Utils/database.js");
 const userRouter = require("./User/Router/user.router.js");
 const adminRouter = require("./Admin/Router/admin.router.js");
+const socketIo = require("socket.io");
+const http = require("http");
+const { userSocketId } = require("./store/socketStore.js");
 
 dotenv.config();
+const app = express();
+
+const server = http.createServer(app);
+
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+app.set("io", io);
+
+io.on("connection", (socket) => {
+  console.log("socket connected");
+
+  socket.on("login-user", (userId) => {
+    userSocketId.set(userId, socket.id);
+    console.log("userSocketId: ", userSocketId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("socket disconnected");
+  });
+});
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -54,6 +80,8 @@ app.use((err, req, res, next) => {
     .json({ success: false, message: err.message || "internal server error" });
 });
 
-app.listen(4000, () => {
+server.listen(4000, () => {
   console.log("Server Ported on 4000");
 });
+
+module.exports = { userSocketId };

@@ -26,12 +26,12 @@ const User = () => {
   }, []);
 
   return (
-    <div className="w-full max-h-screen flex flex-col">
+    <div className="w-full max-h-screen flex flex-col px-2">
       <AdminHeader pageTitle={"Users"} />
       {loading ? (
         "Loading"
       ) : (
-        <div className="flex-1 grid grid-cols-3 gap-4 mt-10 px-5">
+        <div className="flex-1 grid grid-cols-3 max-lg:grid-cols-2 max-xs:grid-cols-1  gap-4 max-sm:gap-1.5 mt-9 max-lg:mt-6 max-sm:mt-4 px-5 max-lg:p-1 max-sm:p-0">
           {users.map((user) => (
             <UserCard key={user._id} userData={user} />
           ))}
@@ -63,22 +63,24 @@ const UserCard = ({ userData }) => {
           deleteHandler={handleUserDelete}
         />
       )}
-      <div className="max-w-sm h-auto bg-orange-500 rounded-lg py-4">
-        <div className="flex items-center justify-center flex-col gap-2">
+      <div className="h-auto bg-orange-500 rounded-lg py-4 px-1 max-sm:py-1.5">
+        <div className="flex items-center justify-center flex-col gap-2 max-sm:gap-1">
           <div>
-            <img src={userAvatar} alt="" className="w-24 h-24 rounded-full" />
+            <img
+              src={userAvatar}
+              alt=""
+              className="w-24 aspect-square max-sm:w-12 rounded-full"
+            />
           </div>
-          <p className="text-white font-medium text-xl">User</p>
-          <div className="flex flex-col gap-1 items-center">
-            <p className="text-white text-[16px] font-semibold">
-              {userData.email}
-            </p>
-            <p className="text-white text-[16px] font-semibold">
-              {userData.name}
-            </p>
+          <p className="text-white font-medium text-xl max-sm:text-xs">User</p>
+          <div className="text-white text-[16px] text-center text-balance max-md:text-sm font-semibold">
+            {userData.email}
           </div>
-          <div className="flex gap-3">
-            <div className="flex items-center gap-2 bg-primary shadow-lg text-orange-600 bg-white px-2 py-1 rounded-lg">
+          <p className="text-white text-[16px] text-center max-md:text-sm font-semibold">
+            {userData.name}
+          </p>
+          <div className="flex gap-3 max-sm:gap-1">
+            <div className="flex items-center gap-2 bg-primary shadow-lg text-orange-600 bg-white px-2 py-1 rounded-lg max-sm:text-sm">
               <MdEmail />
               <p>password</p>
             </div>

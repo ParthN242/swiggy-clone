@@ -54,9 +54,9 @@ const Profile = () => {
               <Link to={"/forgot-password"}>Update Password?</Link>
             </span>
           </div>
-          <div>
+          <div className="flex justify-center">
             <button
-              className="bg-[#ff5200] mx-auto flex items-center gap-2 text-nowrap px-16 hover:bg-[#dc692b] py-2 rounded-lg text-white font-bold"
+              className="bg-[#ff5200] mx-auto text-nowrap w-[40%] max-md:w-full text-center hover:bg-[#dc692b] py-2 rounded-lg text-white font-bold"
               onClick={handleUpdateProfile}
             >
               Update Profile

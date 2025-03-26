@@ -4,12 +4,15 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import OrderCard from "../OrderCard/OrderCard";
+import { useSocket } from "../../Conetext/SocketIo";
 
 const Orders = () => {
   const navigate = useNavigate();
+  const socket = useSocket();
   const { user } = useSelector((state) => state.app);
 
   const [orders, setOrders] = useState([]);
+  console.log("orders: ", orders);
 
   useEffect(() => {
     const fetchMyOrders = async () => {
@@ -23,6 +26,22 @@ const Orders = () => {
     };
     fetchMyOrders();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("order-status-updated", (updatedOrder) => {
+      console.log("status update");
+
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === updatedOrder._id
+            ? { ...order, status: updatedOrder.status }
+            : order
+        )
+      );
+    });
+  }, [socket]);
 
   if (!user) {
     return navigate("/");
@@ -49,6 +68,10 @@ const Orders = () => {
         {orders.map((order) => (
           <OrderCard key={order._id} order={order} />
         ))}
+        {/* {orders.map((order, index) => {
+          if (index > 0) return;
+          return <OrderCard key={order._id} order={order} />;
+        })} */}
       </div>
     </div>
   );

@@ -7,15 +7,18 @@ import {
 import { GiTakeMyMoney } from "react-icons/gi";
 import { BiFoodMenu } from "react-icons/bi";
 import FoodImage from "../FoodImage/FoodImage";
+import InputFiled from "../InputFiled/InputFiled";
+import { toast } from "react-toastify";
+import axios from "axios";
 
-const FoodForm = ({ foodData, submitHandler }) => {
+const FoodForm = ({ foodData, submitHandler, resId }) => {
+  const [resDetail, setResDetail] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [isVeg, setIsVeg] = useState(true);
   const [cuisines, setCuisines] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  console.log("image: ", image);
 
   useEffect(() => {
     if (foodData) {
@@ -28,11 +31,30 @@ const FoodForm = ({ foodData, submitHandler }) => {
     }
   }, [foodData]);
 
+  useEffect(() => {
+    if (!resId) return;
+
+    const fetchResDetail = async () => {
+      try {
+        const { data } = await axios.get(`/restaurant/${resId}`);
+        if (data.success) {
+          setResDetail(data.restaurant);
+        }
+      } catch (error) {
+        console.log("error: ", error);
+        toast.error("Error while fetching restaurant detail");
+      }
+    };
+    fetchResDetail();
+  }, [resId]);
+
   return (
-    <div className="px-8 py-4  border-[1px] border-gray-300">
+    <div className="px-8 max-lg:px-6 py-4 mt-4 max-md:px-3 max-md:mt-2.5 border-[1px] border-gray-300">
       {/* Form */}
-      <h1 className="text-2xl font-semibold my-4">Food Item Details</h1>
-      <div className="flex gap-4">
+      <h1 className="text-2xl max-md:text-center font-semibold my-4 max-md:mb-2.5 max-md:mt-0">
+        Food Item Details
+      </h1>
+      <div className="flex gap-4 max-md:flex-col-reverse">
         <form
           onSubmit={(e) =>
             submitHandler(
@@ -41,68 +63,44 @@ const FoodForm = ({ foodData, submitHandler }) => {
             )
           }
           method="post"
-          className="w-full  rounded-lg p-4 flex flex-col gap-4"
+          className="w-full max-lg:w-[90%] rounded-lg p-4 max-lg:p-2.5 flex flex-col gap-4 max-md:gap-2.5"
         >
           {/* Title */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <MdOutlineFastfood className="text-xl text-textColor" />
-            <input
-              type="text"
-              name="title"
-              placeholder="Enter food name"
-              className="w-full outline-none text-md bg-transparent"
-              value={name || ""}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            inputValue={name}
+            setInputValue={setName}
+            icon={<MdOutlineFastfood />}
+            placeholder={"Enter food name"}
+          />
           {/* Price */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <GiTakeMyMoney className="text-xl text-textColor" />
-            <input
-              type="number"
-              name="price"
-              placeholder="Price"
-              className="w-full outline-none text-md bg-transparent"
-              value={price || ""}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            type="number"
+            inputValue={price}
+            setInputValue={setPrice}
+            icon={<GiTakeMyMoney />}
+            placeholder={"Price"}
+          />
           {/* IsVeg  */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <MdOutlineNoFood className="text-xl text-textColor" />
-            {/* <p className="">Type</p> */}
-            <div>
-              <input
-                type="radio"
-                name="isVeg"
-                id="veg"
-                checked={isVeg === true}
-                onChange={() => setIsVeg(true)}
-                required
-              />{" "}
-              <label htmlFor="veg">Veg</label>
-            </div>
-            <div className="ml-6">
-              <input
-                type="radio"
-                name="isVeg"
-                id="non-veg"
-                checked={isVeg === false}
-                required
-                onChange={() => setIsVeg(false)}
-              />{" "}
-              <label htmlFor="non-veg">Non-Veg</label>
-            </div>
-          </div>
+          <InputFiled
+            type="radio"
+            inputValue={isVeg}
+            setInputValue={setIsVeg}
+            icon={<MdOutlineNoFood />}
+            placeholder={""}
+            options={[
+              { label: "Veg", value: true },
+              ...(resDetail?.isVeg !== "veg"
+                ? [{ label: "Non-Veg", value: false }]
+                : []),
+            ]}
+          />
           {/* cuisines */}
           <div className="flex gap-3 items-center border-b border-gray-300 py-3">
             <GiTakeMyMoney className="text-xl text-textColor" />
             <input
               type="text"
               name="cuisines"
-              placeholder="Cuisines (sperated by , comma)"
+              placeholder="Cuisines (separated by , comma)"
               className="w-full outline-none text-md bg-transparent"
               value={cuisines || ""}
               onChange={(e) => setCuisines(e.target.value)}
@@ -122,17 +120,13 @@ const FoodForm = ({ foodData, submitHandler }) => {
             />
           </div>
           {/* Save Button */}
-          <div className="flex justify-end">
-            <button
-              // whileHover={{ scale: 1.1 }}
-              // disabled={loadingImg}
-              className="py-2 px-12 rounded bg-orange-500 flex items-center justify-center gap-2 text-white text-lg"
-            >
+          <div className="flex justify-end max-md:justify-center">
+            <button className="py-2 px-12 max-md:px-8 rounded bg-orange-500 flex items-center justify-center gap-2 text-white text-lg max-md:text-base">
               {foodData ? "Update" : "Save"} <MdOutlineDataSaverOn />
             </button>
           </div>
         </form>
-        <div className="w-[45%] h-[220px] border border-gray-300 border-dotted flex items-center justify-center">
+        <div className="w-[45%] max-md:w-full h-[220px] max-lg:h-[180px] border border-gray-300 border-dotted flex items-center justify-center">
           <FoodImage image={image} setImage={setImage} />
         </div>
       </div>

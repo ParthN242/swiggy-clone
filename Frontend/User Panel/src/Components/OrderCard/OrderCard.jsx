@@ -7,16 +7,15 @@ import { useEffect } from "react";
 
 const OrderCard = ({ order }) => {
   const { _id, status, resDetail, cartItems, totalPayment, createdAt } = order;
-  const currentDate = new Date();
   const [openDeleteModel, setOpenDeleteModel] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(
-    moment(currentDate).diff(moment(createdAt), "seconds")
-  );
-  const cancelTime = 60;
-  console.log("timeLeft: ", timeLeft, " ", _id);
+
+  const currentDate = new Date().toISOString();
+  const timeSpent = moment(currentDate).diff(moment(createdAt), "seconds");
+  const cancelTime = 10;
+  const [timeLeft, setTimeLeft] = useState(cancelTime - timeSpent);
 
   useEffect(() => {
-    if (timeLeft > cancelTime) return;
+    if (timeSpent > cancelTime) return;
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
@@ -28,7 +27,7 @@ const OrderCard = ({ order }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [timeSpent, timeLeft]);
 
   const deleteOrderHandler = async () => {
     try {
@@ -43,14 +42,14 @@ const OrderCard = ({ order }) => {
 
   return (
     <div className="w-full p-6 max-lg:p-3 rounded-lg shadow-lg" key={_id}>
-      <div className="flex gap-12 max-lg:gap-3 mb-4 pb-4 border-b border-b-light-gray">
+      <div className="flex gap-10 max-lg:gap-3 mb-4 pb-4 border-b border-b-light-gray">
         <div className="">
           {/* Image */}
           <div>
             <img
               src={resDetail.image}
               alt={resDetail.name}
-              className="h-[118px] w-[160px] max-sm:hidden object-contain border border-slate-200 rounded-lg"
+              className="h-[118px] w-[160px] max-sm:hidden object-cover border border-slate-200 rounded-lg"
             />
           </div>
         </div>
@@ -63,32 +62,32 @@ const OrderCard = ({ order }) => {
           </p>
           <p className="text-sm max-md:text-[10px]">ORDERS #{_id}</p>
           <div>
-            <button className="text-[12px] max-md:text-[10px] leading-normal text-orange-400">
+            {/* <button className="text-[12px] max-md:text-[10px] leading-normal text-orange-400">
               View Details
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="flex flex-col items-center justify-between">
           <div className="w-full">
             {/* Status */}
             {status === "Confirmed" ? (
-              <button className="bg-cyan-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+              <button className="bg-cyan-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs max-md:text-xs mb-4">
                 Confirming
               </button>
             ) : status === "Preparing" ? (
-              <button className="bg-[#007BFF] w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+              <button className="bg-[#007BFF] w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs mb-4">
                 Preparing
               </button>
             ) : status === "On the Way" ? (
-              <button className="bg-[#FFA500] w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+              <button className="bg-[#FFA500] w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs mb-4">
                 On the Way
               </button>
             ) : status === "Delivered" ? (
-              <button className="bg-green-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+              <button className="bg-green-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs mb-4">
                 Delivered
               </button>
             ) : (
-              <button className="bg-red-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] mb-4">
+              <button className="bg-red-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs mb-4">
                 Cancelled
               </button>
             )}
@@ -98,8 +97,8 @@ const OrderCard = ({ order }) => {
           </div>
           {status !== "Canceled" &&
             status !== "Delivered" &&
-            timeLeft < cancelTime &&
-            timeLeft !== 0 && (
+            0 < timeLeft &&
+            !(timeLeft > 60) && (
               <>
                 <div>{timeLeft > 0 && `0:${timeLeft}`}</div>
                 <button

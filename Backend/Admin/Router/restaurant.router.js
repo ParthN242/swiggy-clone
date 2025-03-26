@@ -9,7 +9,7 @@ const {
   updateRestaurantDetail,
   updateFoodItem,
   getFoodItemDetail,
-  dashboardDeatil,
+  dashboardDetail,
 } = require("../Controller/restaurant.controller.js");
 const verifyAdmin = require("../Middleware/verifyAdmin.js");
 const multer = require("multer");
@@ -23,11 +23,10 @@ const multerUpload = multer({
 });
 const imageUpload = multerUpload.single("image");
 
-// /api/admin/restaurant/
 router
   .post("/", imageUpload, verifyAdmin, addRestaurant)
   .get("/", verifyAdmin, getAllRestaurants)
-  .get("/dashboard", verifyAdmin, dashboardDeatil)
+  .get("/dashboard", verifyAdmin, dashboardDetail)
   .get("/:resId", verifyAdmin, getRestaurantDetail)
   .get("/food/:foodId", verifyAdmin, getFoodItemDetail)
   .post("/food", imageUpload, verifyAdmin, addFoodItem)

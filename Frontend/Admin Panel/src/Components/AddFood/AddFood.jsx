@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import AdminHeader from "../Header/AdminHeader";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -11,6 +10,10 @@ const AddFood = () => {
 
   const addFoodHandler = async (data, e) => {
     e.preventDefault();
+    if (!data.image) {
+      toast.error("Please select an image");
+      return;
+    }
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("price", data.price);
@@ -36,9 +39,13 @@ const AddFood = () => {
     }
   };
   return (
-    <section className="flex flex-col">
-      <AdminHeader pageTitle="Add Food" />
-      <FoodForm submitHandler={addFoodHandler} />
+    <section className="flex flex-col px-2">
+      <AdminHeader
+        pageTitle="Add Food"
+        isBackNavigation
+        navigationUrl={`/restaurant/${resId}`}
+      />
+      <FoodForm submitHandler={addFoodHandler} resId={resId} />
     </section>
   );
 };

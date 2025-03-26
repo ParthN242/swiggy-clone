@@ -124,11 +124,7 @@ exports.updateUserProfile = async (req, res, next) => {
 
 exports.getAllRestaurant = async (req, res, next) => {
   try {
-    const restaurants = await Restaurant.find();
-    const r = await Restaurant.updateMany(
-      {},
-      { avgRating: 4.3, totalReviews: 4100 }
-    );
+    const restaurants = await Restaurant.find().sort({ createdAt: -1 });
 
     return res.status(200).json({ success: true, restaurants });
   } catch (error) {
@@ -247,6 +243,14 @@ exports.createOrder = async (req, res, next) => {
       totalPayment,
     });
 
+    const io = req.app.get("io");
+
+    if (io) {
+      console.log("server");
+
+      io.emit("create-order", order);
+    }
+
     return res.status(200).json({ success: true, order });
   } catch (error) {
     console.log("error: ", error);
@@ -283,7 +287,8 @@ exports.getAllOrder = async (req, res, next) => {
     const orders = await Order.find({ user: req.user._id })
       .populate("resDetail")
       .populate("cartItems.food")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({ success: true, orders });
   } catch (error) {
@@ -349,9 +354,9 @@ exports.resetPassword = async (req, res, next) => {
         .json({ success: false, message: "Invalid or expired reset token" });
 
     // Hashed Password
-    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+    // const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-    user.password = hashedPassword;
+    user.password = newPassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiresAt = undefined;
 

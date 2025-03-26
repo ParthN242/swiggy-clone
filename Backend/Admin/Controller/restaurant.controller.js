@@ -53,6 +53,12 @@ exports.addRestaurant = async (req, res, next) => {
       owner: req.admin._id,
     });
 
+    const io = req.app.get("io");
+
+    if (io) {
+      io.emit("add-new-restaurant", restaurant);
+    }
+
     return res.status(201).json({ success: true, restaurant });
   } catch (error) {
     console.log("error: ", error);
@@ -63,7 +69,7 @@ exports.addRestaurant = async (req, res, next) => {
 // Get All Restaurant
 exports.getAllRestaurants = async (req, res, next) => {
   try {
-    const restaurants = await Restaurant.find();
+    const restaurants = await Restaurant.find().sort({ createdAt: -1 });
 
     return res.status(200).json({ success: true, restaurants });
   } catch (error) {
@@ -115,11 +121,27 @@ exports.updateRestaurantDetail = async (req, res, next) => {
 // Delete Restaurant Details By Id
 exports.deleteRestaurantDetail = async (req, res, next) => {
   try {
+    const restaurant = await Restaurant.findById(req.params.resId);
+
+    if (!restaurant) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Restaurant not found" });
+    }
+
+    await Food.deleteMany({ restaurant: req.params.resId });
+
     await Restaurant.findByIdAndDelete(req.params.resId);
+
+    const io = req.app.get("io");
+
+    if (io) {
+      io.emit("delete-restaurant", restaurant._id);
+    }
 
     return res
       .status(200)
-      .json({ success: true, messgage: "Restaurant Deleted Successfully" });
+      .json({ success: true, message: "Restaurant Deleted Successfully" });
   } catch (error) {
     console.log("error: ", error);
     return res.status(400).json({ error });
@@ -204,7 +226,7 @@ exports.deleteFoodItem = async (req, res, next) => {
 
     return res
       .status(200)
-      .json({ success: true, messgage: "Food Item Deleted Successfully" });
+      .json({ success: true, message: "Food Item Deleted Successfully" });
   } catch (error) {
     console.log("error: ", error);
     return res.status(400).json({ error });
@@ -212,18 +234,23 @@ exports.deleteFoodItem = async (req, res, next) => {
 };
 
 // Dashboard
-exports.dashboardDeatil = async (req, res, next) => {
+exports.dashboardDetail = async (req, res, next) => {
   try {
     const foods = await Food.find();
     const users = await User.find();
     const restaurants = await Restaurant.find();
     const orders = await Order.find();
+    const totalRevenue = orders.reduce((sum, order) => {
+      return order.status === "Delivered" ? sum + order.totalPayment : sum;
+    }, 0);
+    console.log("totalRevenue: ", totalRevenue);
 
     return res.status(200).json({
-      foods: foods.length,
       users: users.length,
+      foods: foods.length,
       restaurants: restaurants.length,
       orders: orders.length,
+      "total Revenue": totalRevenue,
     });
   } catch (error) {
     console.log("error: ", error);

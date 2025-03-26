@@ -52,10 +52,10 @@ const OnlineRestaurant = () => {
         {restaurants.length === 0 &&
           Array(10)
             .fill(0)
-            .map((res) => (
+            .map((res, index) => (
               <div
                 className={`w-full flex flex-col gap-4 hover:scale-[0.98] transition-all duration-100 ease-out`}
-                key={res._id}
+                key={index}
               >
                 <div className="relative w-full h-[135px]">
                   <div className="w-full h-full object-cover rounded-2xl bg-slate-200" />

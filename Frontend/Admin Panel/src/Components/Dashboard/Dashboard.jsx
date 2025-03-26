@@ -3,6 +3,14 @@ import AdminHeader from "../Header/AdminHeader";
 import DashboardCard from "./DashboardCard";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { FaUserAlt } from "react-icons/fa";
+import {
+  MdRestaurant,
+  MdShoppingCart,
+  MdOutlineAttachMoney,
+  MdLunchDining,
+} from "react-icons/md";
+import { AiOutlineShopping } from "react-icons/ai";
 
 const Dashboard = () => {
   const [cardDetail, setCardDetail] = useState([]);
@@ -22,14 +30,28 @@ const Dashboard = () => {
     fetchDashboardDetail();
   }, []);
 
+  const iconMap = {
+    users: <FaUserAlt />,
+    foods: <MdLunchDining />,
+    restaurants: <MdRestaurant />,
+    orders: <MdShoppingCart />,
+    revenue: <MdOutlineAttachMoney />,
+    totalSales: <AiOutlineShopping />,
+  };
+
   return (
     <div>
       <AdminHeader pageTitle={"Dashboard"} />
-      <div className="max-h-full px-8 py-4 ">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="max-h-full px-8 py-4 max-md:px-5 max-md:py-2">
+        <div className="grid grid-cols-3 max-lg:grid-cols-2 max-xs:grid-cols-1 gap-4 flex-wrap">
           {cardDetail.length > 0 &&
             cardDetail.map(([key, value], index) => (
-              <DashboardCard key={index} title={key} value={value} />
+              <DashboardCard
+                key={index}
+                title={key}
+                value={value}
+                icon={iconMap[key] || <FaUserAlt />}
+              />
             ))}
         </div>
       </div>

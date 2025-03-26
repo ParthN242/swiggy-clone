@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDeleteOutline, MdCloudUpload } from "react-icons/md";
 
 const FoodImage = ({ image, setImage }) => {
@@ -44,13 +44,13 @@ const FoodImage = ({ image, setImage }) => {
         // Default
         <label
           htmlFor="file-upload"
-          className="flex flex-col gap-4 items-center justify-center h-full"
+          className="flex flex-col gap-4 items-center justify-center h-full p-2"
         >
           <MdCloudUpload className="text-3xl text-gray-500 " />
-          <p className="text-lg font-semibold text-gray-400">
+          <p className="text-lg text-center font-semibold text-gray-400">
             Click here to upload
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-center text-gray-400">
             PNG, JPG or GIF (MAX. 800x400px)
           </p>
           <input

@@ -17,7 +17,6 @@ import Profile from "../../Components/Profile/Profile";
 const MyAccount = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.app);
-  console.log("user: ", user);
   const dispatch = useDispatch();
 
   const signOutUser = async () => {
@@ -44,7 +43,7 @@ const MyAccount = () => {
         <>loading...</>
       ) : (
         <div className="w-full min-h-[100vh] flex bg-[#37718e] pb-20">
-          <div className="w-[80%] max-lg:w-[90%] mx-auto mt-[60px] max-md:mt-[30px]">
+          <div className="w-[80%] max-lg:w-[95%] mx-auto mt-[60px] max-md:mt-[30px]">
             <div className="text-white font-proxi mb-8 flex justify-between">
               <div>
                 <h1 className="capitalize text-3xl max-lg:text-lg font-bold">
@@ -61,15 +60,15 @@ const MyAccount = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full h-screen bg-white p-8 max-lg:p-3 flex gap-4">
+            <div className="w-full h-screen bg-white p-8 max-lg:p-3 flex max-md:flex-col gap-4 max-md:gap-[6px]">
               {/* Aside */}
-              <aside className="bg-[#edf1f7] min-w-[240px] max-lg:hidden flex flex-col gap-4 py-6 pl-[20px]">
+              <aside className="bg-[#edf1f7] w-[240px] max-lg:w-[140px]  flex flex-col max-md:flex-row max-md:w-full max-md:justify-center gap-4 py-6 pl-[20px] max-lg:p-2 max-md:p-1">
                 <NavLink
                   to={"/my-account/orders"}
                   className={({ isActive }) =>
                     `${
                       isActive ? "bg-white " : ""
-                    } py-4 pr-12 pl-10 font-semibold text-left hover:bg-white`
+                    } py-4 pr-12 pl-10 max-lg:p-2 font-semibold max-md:text-sm text-left max-lg:text-center hover:bg-white`
                   }
                 >
                   Orders
@@ -79,7 +78,7 @@ const MyAccount = () => {
                   className={({ isActive }) =>
                     `${
                       isActive ? "bg-white " : ""
-                    } py-4 pr-12 pl-10 font-semibold text-left hover:bg-white`
+                    } py-4 pr-12 pl-10 max-lg:p-2 font-semibold max-md:text-sm text-left max-lg:text-center hover:bg-white`
                   }
                 >
                   Profile

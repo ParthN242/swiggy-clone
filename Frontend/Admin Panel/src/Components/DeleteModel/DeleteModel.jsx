@@ -1,5 +1,3 @@
-import React from "react";
-
 const DeleteModel = ({ setOpenDeleteModel, deleteHandler }) => {
   const handleClickOutside = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
@@ -9,10 +7,10 @@ const DeleteModel = ({ setOpenDeleteModel, deleteHandler }) => {
 
   return (
     <div
-      className="modal-overlay overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full flex bg-black/60 backdrop-blur-sm"
+      className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 items-center w-full h-dvh md:h-full bg-black/60 backdrop-blur-sm"
       onClick={handleClickOutside}
     >
-      <div className="relative p-4 w-full  max-w-md h-full md:h-auto">
+      <div className="relative p-4 w-full h-full flex justify-center items-center">
         {/* Modal content */}
         <div className="relative p-4 text-center bg-white rounded-lg shadow sm:p-5">
           <button
@@ -62,7 +60,7 @@ const DeleteModel = ({ setOpenDeleteModel, deleteHandler }) => {
               className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 "
               onClick={deleteHandler}
             >
-              Yes, I'm sure
+              Yes, I&#39;m sure
             </button>
           </div>
         </div>

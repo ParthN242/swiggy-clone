@@ -63,7 +63,6 @@ const CheckOutForm = () => {
       });
 
       const result = await paymentPromise;
-      console.log("result: ", result);
 
       if (result.error) {
         console.error(result.error.message);
@@ -86,7 +85,6 @@ const CheckOutForm = () => {
       } else {
         // toast.error("Error While Payment ");
       }
-      console.log(result.paymentIntent.paymentStatus);
     } catch (error) {
       console.log("error: ", error);
       toast.error("Error while payment");

@@ -21,7 +21,6 @@ const RestaurantMenu = () => {
   const { cart, showCartDialogBox } = useSelector((state) => state.app);
 
   const [resDetails, setResDetails] = useState(null);
-  console.log("resDetails: ", resDetails);
   const [resMenu, setResMenu] = useState([]);
   const [isStartAfresh, setisStartAfresh] = useState(null);
 

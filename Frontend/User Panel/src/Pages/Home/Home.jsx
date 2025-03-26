@@ -1,4 +1,3 @@
-import React from "react";
 import ShowCaseFood from "../../Components/ShowCaseFood/ShowCaseFood";
 import TopRestaurantChain from "../../Components/TopResTaurantChain/TopRestaurantChain";
 import OnlineRestaurant from "../../Components/OnlineRestaurant/OnlineRestaurant";
@@ -7,11 +6,11 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { setRestaurants } from "../../Redux/appSlice";
 import { useDispatch } from "react-redux";
-import Loading from "../../Components/Loader/Loading";
 import Footer from "../../Components/Footer/Footer";
 
 const Home = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchAllRestaurants = async () => {
       try {
@@ -23,7 +22,8 @@ const Home = () => {
       }
     };
     fetchAllRestaurants();
-  }, []);
+  }, [dispatch]);
+
   return (
     <>
       <main className="">

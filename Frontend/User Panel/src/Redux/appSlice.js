@@ -35,6 +35,14 @@ const appSlice = createSlice({
     setRestaurants: (state, action) => {
       state.restaurants = action.payload;
     },
+    addRestaurants: (state, action) => {
+      state.restaurants = [action.payload, ...state.restaurants];
+    },
+    deleteRestaurant: (state, action) => {
+      state.restaurants = state.restaurants.filter(
+        (rest) => rest._id !== action.payload
+      );
+    },
     addCartItem: (state, action) => {
       state.cart.resDetail = action.payload.resDetails;
       state.cart.cartItems.push(action.payload.item);
@@ -88,6 +96,8 @@ export const {
   setAuth,
   setAddressModel,
   setRestaurants,
+  addRestaurants,
+  deleteRestaurant,
   addCartItem,
   incrementCartItem,
   decrementCartItem,

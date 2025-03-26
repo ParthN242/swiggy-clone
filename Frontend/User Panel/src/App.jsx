@@ -14,17 +14,26 @@ import { setUser, setUserError, setUserLoading } from "./Redux/appSlice";
 import MyAccount from "./Pages/MyAccount/MyAccount";
 import Payment from "./Pages/Payment/Payment";
 import ProtectedRoute from "./Utils/ProtectedRoute";
-import Footer from "./Components/Footer/Footer";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import Search from "./Pages/Search/Search";
+import { useSocket } from "./Conetext/SocketIo";
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
 
 const App = () => {
+  const socket = useSocket();
   const { isAuthOpen, user } = useSelector((state) => state.app);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("welcome", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
 
   useEffect(() => {
     if (!user) {
@@ -43,7 +52,10 @@ const App = () => {
       };
       fetchUserProfile();
     }
-  }, [user, dispatch]);
+    if (user && socket) {
+      socket.emit("login-user", user._id);
+    }
+  }, [user, dispatch, socket]);
 
   return (
     <div className="relative">

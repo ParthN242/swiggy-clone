@@ -1,16 +1,18 @@
-import React from "react";
 import AdminHeader from "../Header/AdminHeader";
 import { toast } from "react-toastify";
 import axios from "axios";
 import RestaurantForm from "../RestaurantForm/RestaurantForm";
 import { useNavigate } from "react-router-dom";
-import Restaurant from "./../Restaurant/Restaurant";
 
 const AddRestaurant = () => {
   const navigate = useNavigate();
 
   const addRestaurantHandler = async (e, resData) => {
     e.preventDefault();
+    if (!resData.image) {
+      toast.error("Please select an image");
+      return;
+    }
     const formData = new FormData();
     formData.append("name", resData.name);
     formData.append("cuisines", resData.cuisines.split(","));

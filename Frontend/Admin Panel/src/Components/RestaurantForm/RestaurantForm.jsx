@@ -15,20 +15,12 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { FaMapMarked, FaGlobe } from "react-icons/fa";
 import { BiFoodMenu } from "react-icons/bi";
 import FoodImage from "../FoodImage/FoodImage";
+import InputFiled from "../InputFiled/InputFiled";
 
-const InputFiled = ({ inputValue, setInputValue, icon }) => {
+const InputWrapper = ({ children }) => {
   return (
-    <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-      {/* <icon className="text-xl text-textColor" /> */}
-      {icon}
-      <input
-        type="text"
-        name="title"
-        placeholder="Enter Restaurant name"
-        className="w-full outline-none text-md bg-transparent"
-        value={inputValue || ""}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
+    <div className="flex gap-2 items-center max-md:items-stretch  max-md:flex-col">
+      {children}
     </div>
   );
 };
@@ -95,276 +87,163 @@ const RestaurantForm = ({ resDetail, submitHandler }) => {
   }, [resDetail]);
 
   return (
-    <div className="px-8 py-4 mt-4 flex flex-col border-[1px] border-gray-300 max-h-full overflow-auto">
+    <div className="px-8 py-4 mt-4 max-lg:px-6 max-md:px-3 max-md:mt-2.5 flex flex-col border-[1px] border-gray-300 max-h-full overflow-auto">
       {/* Form */}
-      <h1 className="text-2xl font-semibold my-4">Restaurant Details</h1>
-      <div className="flex gap-4">
-        <form
-          onSubmit={(e) => submitHandler(e, resData)}
-          className="w-full  rounded-lg p-4 flex flex-col gap-4"
-        >
+      <h1 className="text-2xl max-md:text-center font-semibold my-4 max-md:mb-2.5 max-md:mt-0">
+        Restaurant Details
+      </h1>
+      <form
+        onSubmit={(e) => submitHandler(e, resData)}
+        className="flex gap-4 max-md:flex-col-reverse"
+      >
+        <div className="w-full max-lg:w-[90%] max-md:w-full rounded-lg p-4 max-lg:p-2.5 flex flex-col gap-4 max-md:gap-2.5">
           {/* Title */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <MdRestaurant className="text-xl text-textColor" />
-            <input
-              type="text"
-              name="title"
-              placeholder="Enter Restaurant name"
-              className="w-full outline-none text-md bg-transparent"
-              value={name || ""}
-              required
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          {/* <InputFiled
+          <InputFiled
             inputValue={name}
             setInputValue={setName}
-            icon={<MdRestaurant className="text-xl text-textColor" />}
-          /> */}
+            icon={<MdRestaurant />}
+            placeholder={"Enter Restaurant name"}
+          />
           {/* cuisines */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <GiTakeMyMoney className="text-xl text-textColor" />
-            <input
-              type="text"
-              name="cuisines"
-              placeholder="Cuisines (separated by , comma)"
-              className="w-full outline-none text-md bg-transparent"
-              value={cuisines || ""}
-              onChange={(e) => setCuisines(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            inputValue={cuisines}
+            setInputValue={setCuisines}
+            icon={<GiTakeMyMoney />}
+            placeholder={"Cuisines (separated by , comma)"}
+          />
           {/* Cost For Two */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <MdOutlineCurrencyRupee className="text-xl text-textColor" />
-            <input
-              type="number"
-              name="costForTwo"
-              placeholder="Cost for two"
-              className="w-full outline-none text-md bg-transparent"
-              value={costForTwo || ""}
-              onChange={(e) => setCostForTwo(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            type="number"
+            inputValue={costForTwo}
+            setInputValue={setCostForTwo}
+            icon={<MdOutlineCurrencyRupee />}
+            placeholder={"Cost for two"}
+          />
           {/* isVeg */}
-          <div className="flex gap-3 items-center border-b border-gray-300 py-3">
-            <MdOutlineNoFood className="text-xl text-textColor" />
-            <div>
-              <input
-                type="radio"
-                name="isVeg"
-                id="veg"
-                checked={isVeg === "veg"}
-                onChange={(e) => setIsVeg(e.target.id)}
-                required
-              />{" "}
-              <label htmlFor="veg">Veg</label>
-            </div>
-            <div className="ml-6">
-              <input
-                type="radio"
-                name="isVeg"
-                id="non-veg"
-                checked={isVeg === "non-veg"}
-                onChange={(e) => setIsVeg(e.target.id)}
-                required
-              />{" "}
-              <label htmlFor="non-veg">Non-Veg</label>
-            </div>
-            <div className="ml-6">
-              <input
-                type="radio"
-                name="isVeg"
-                id="both"
-                checked={isVeg === "both"}
-                onChange={(e) => setIsVeg(e.target.id)}
-                required
-              />{" "}
-              <label htmlFor="both">Both</label>
-            </div>
-          </div>
-          <div className="flex gap-2 items-center">
+
+          <InputFiled
+            type="radio"
+            inputValue={isVeg}
+            setInputValue={setIsVeg}
+            icon={<TbClock />}
+            placeholder={""}
+            options={[
+              { label: "Veg", value: "veg" },
+              { label: "Non-Veg", value: "non-veg" },
+              { label: "Both", value: "both" },
+            ]}
+          />
+          <InputWrapper>
             {/* Min Time */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <TbClock className="text-xl text-textColor" />
-              <input
-                type="number"
-                name="minTime"
-                placeholder="Minimum Time"
-                className="w-full outline-none text-md bg-transparent"
-                value={minTime || ""}
-                onChange={(e) => setMinTime(e.target.value)}
-                required
-              />
-            </div>
+            <InputFiled
+              inputValue={minTime}
+              setInputValue={setMinTime}
+              icon={<TbClock />}
+              placeholder={"Minimum Time"}
+            />
             {/* Max Time */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <TbClockCheck className="text-xl text-textColor" />
-              <input
-                type="number"
-                name="maxTime"
-                placeholder="Max Time"
-                className="w-full outline-none text-md bg-transparent"
-                value={maxTime || ""}
-                onChange={(e) => setMaxTime(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            <InputFiled
+              inputValue={maxTime}
+              setInputValue={setMaxTime}
+              icon={<TbClockCheck />}
+              placeholder={"Max Time"}
+            />
+          </InputWrapper>
           <h4 className="text-xl">Address Detail</h4>
           {/* Address */}
-          <div className="flex gap-3 items-start border-b border-gray-300 py-3">
-            <BiFoodMenu className="text-xl text-textColor" />
-            <textarea
-              type="text"
-              placeholder="Address"
-              className="w-full outline-none text-md bg-transparent"
-              value={address || ""}
-              onChange={(e) => setAddress(e.target.value)}
-              required
+          <InputFiled
+            type="textarea"
+            inputValue={address}
+            setInputValue={setAddress}
+            icon={<BiFoodMenu />}
+            placeholder={"Address"}
+          />
+          <InputWrapper>
+            {/* Area Name */}
+            <InputFiled
+              inputValue={areaName}
+              setInputValue={setAreaName}
+              icon={<MdAreaChart />}
+              placeholder={"Area Name"}
             />
-          </div>
-          <div className="flex gap-2 items-center">
-            {/* Arean Name */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <MdAreaChart className="text-xl text-textColor" />
-              <input
-                type="text"
-                name="areaname"
-                placeholder="Arean Name"
-                className="w-full outline-none text-md bg-transparent"
-                value={areaName || ""}
-                onChange={(e) => setAreaName(e.target.value)}
-                required
-              />
-            </div>
             {/* City */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <MdLocationCity className="text-xl text-textColor" />
-              <input
-                type="text"
-                name="city"
-                placeholder="city"
-                className="w-full outline-none text-md bg-transparent"
-                value={city || ""}
-                onChange={(e) => setCity(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className="flex gap-2 items-center">
+            <InputFiled
+              inputValue={city}
+              setInputValue={setCity}
+              icon={<MdLocationCity />}
+              placeholder={"City"}
+            />
+          </InputWrapper>
+          <InputWrapper>
             {/* State */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <FaMapMarked className="text-xl text-textColor" />
-              <input
-                type="text"
-                name="state"
-                placeholder="State"
-                className="w-full outline-none text-md bg-transparent"
-                value={state || ""}
-                onChange={(e) => setState(e.target.value)}
-                required
-              />
-            </div>
+            <InputFiled
+              inputValue={state}
+              setInputValue={setState}
+              icon={<FaMapMarked />}
+              placeholder={"State"}
+            />
             {/* Country */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <FaGlobe className="text-xl text-textColor" />
-              <input
-                type="text"
-                name="country"
-                placeholder="Country"
-                className="w-full outline-none text-md bg-transparent"
-                value={country || ""}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            <InputFiled
+              inputValue={country}
+              setInputValue={setCountry}
+              icon={<FaGlobe />}
+              placeholder={"Country"}
+            />
+          </InputWrapper>
           <h4 className="text-xl">Contact Detail</h4>
           {/* Contact Number */}
-          <div className="flex gap-3 items-start border-b border-gray-300 py-3">
-            <MdPhone className="text-xl text-textColor" />
-            <input
-              type="number"
-              name="phoneno"
-              placeholder="Contact Number"
-              className="w-full outline-none text-md bg-transparent"
-              value={contact || ""}
-              onChange={(e) => setContact(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            inputValue={contact}
+            setInputValue={setContact}
+            icon={<MdPhone />}
+            placeholder={"Contact Number"}
+          />
           {/* Email */}
-          <div className="flex gap-3 items-start border-b border-gray-300 py-3">
-            <MdOutlineEmail className="text-xl text-textColor" />
-            <input
-              type="email"
-              name="eamil"
-              placeholder="Email"
-              className="w-full outline-none text-md bg-transparent"
-              value={email || ""}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            inputValue={email}
+            setInputValue={setEmail}
+            icon={<MdOutlineEmail />}
+            placeholder={"Email"}
+          />
           <h4 className="text-xl">Owner Detail</h4>
           {/* Contact name */}
-          <div className="flex gap-3 items-start border-b border-gray-300 py-3">
-            <MdPersonOutline className="text-xl text-textColor" />
-            <input
-              type="text"
-              name="ownerName"
-              placeholder="Owner Name"
-              className="w-full outline-none text-md bg-transparent"
-              value={ownerName || ""}
-              onChange={(e) => setOwnerName(e.target.value)}
-              required
-            />
-          </div>
+          <InputFiled
+            inputValue={ownerName}
+            setInputValue={setOwnerName}
+            icon={<MdPersonOutline />}
+            placeholder={"Owner Name"}
+          />
           {/* Contact number */}
-          <div className="flex gap-2 items-center">
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <MdPhone className="text-xl text-textColor" />
-              <input
-                type="number"
-                name="ownerPhoneno"
-                placeholder="Owner Contact Number"
-                className="w-full outline-none text-md bg-transparent"
-                value={ownerContact || ""}
-                onChange={(e) => setOwnerContact(e.target.value)}
-                required
-              />
-            </div>
+          <InputWrapper>
+            <InputFiled
+              inputValue={ownerContact}
+              setInputValue={setOwnerContact}
+              icon={<MdPhone />}
+              placeholder={"Owner Contact Number"}
+            />
             {/* Owner Email */}
-            <div className="flex flex-1 gap-3 items-start border-b border-gray-300 py-3">
-              <MdOutlineEmail className="text-xl text-textColor" />
-              <input
-                type="email"
-                name="ownerEmail"
-                placeholder="Owner Email"
-                className="w-full outline-none text-md bg-transparent"
-                value={ownerEmail || ""}
-                onChange={(e) => setOwnerEmail(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            <InputFiled
+              inputValue={ownerEmail}
+              setInputValue={setOwnerEmail}
+              icon={<MdOutlineEmail />}
+              placeholder={"Owner Email"}
+            />
+          </InputWrapper>
           {/* Save Button */}
-          <div className="flex justify-end">
-            <button className="py-2 px-12 rounded bg-orange-500 flex items-center justify-center gap-2 text-white text-lg">
+          <div className="flex justify-end max-md:justify-center">
+            <button className="py-2 px-12 rounded bg-orange-500 hover:bg-orange-600 transition-colors duration-200 flex items-center justify-center gap-2 text-white text-lg">
               {resDetail ? "Update" : "Save"} <MdOutlineDataSaverOn />
             </button>
           </div>
-        </form>
-        <div className="w-[45%] h-[220px] border border-gray-300 border-dotted flex items-center justify-center">
+        </div>
+        <div className="w-[45%] max-md:w-[100%] h-[220px] border border-gray-300 border-dotted flex items-center justify-center">
           <FoodImage
             text={"Restaurant Image"}
             image={image}
             setImage={setImage}
           />
         </div>
-      </div>
+      </form>
     </div>
   );
 };

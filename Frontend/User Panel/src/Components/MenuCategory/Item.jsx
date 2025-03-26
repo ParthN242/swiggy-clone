@@ -25,13 +25,13 @@ const Item = ({
       <div className="pb-8 flex justify-between gap-4 max-sm:gap-2">
         <div className="w-[75%]">
           <div>
-            {!isVeg ? (
+            {!isVeg === "veg" ? (
               <h3>
-                <FaCircle className="border-2 border-solid border-[#e43b4f] text-[#e43b4f] text-xl max-h-4 max-w-4 p-[2px] text-[8px] -rotate-90 rounded-sm" />
+                <FaCircle className="border-2 border-solid border-[#e43b4f] text-[#e43b4f] text-xl max-h-4 max-w-4 p-[2px] -rotate-90 rounded-sm" />
               </h3>
             ) : (
               <h3>
-                <FaCircle className="border-2 border-solid border-[#0f8a65] text-[#0f8a65] text-xl max-h-4 max-w-4 p-[2px] text-[8px] rounded-sm" />
+                <FaCircle className="border-2 border-solid border-[#0f8a65] text-[#0f8a65] text-xl max-h-4 max-w-4 p-[2px] rounded-sm" />
               </h3>
             )}
             <div>
