@@ -3,7 +3,7 @@ import AdminHeader from "../Header/AdminHeader";
 import { toast } from "react-toastify";
 import moment from "moment";
 import axios from "axios";
-import { useSocket } from "./../../../../User Panel/src/Conetext/SocketIo";
+import { useSocket } from "../../Context/SocketIo";
 
 const Orders = () => {
   const socket = useSocket();
@@ -26,7 +26,6 @@ const Orders = () => {
           }
         })
       );
-      console.log("orders: ", orders);
     } catch (error) {
       console.log("error: ", error);
       toast.error("Error while updating status");
@@ -52,6 +51,16 @@ const Orders = () => {
 
     socket.on("create-order", (newOrder) => {
       setOrders((prevOrders) => [newOrder, ...prevOrders]);
+    });
+
+    socket.on("user-status-cancel", (updatedOrder) => {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === updatedOrder._id
+            ? { ...order, status: updatedOrder.status }
+            : order
+        )
+      );
     });
   }, [socket]);
 

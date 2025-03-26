@@ -8,6 +8,7 @@ const Stripe = require("stripe");
 const crypto = require("crypto");
 const { sendResetPasswordEmail } = require("../../Utils/nodeEmail.js");
 const dotenv = require("dotenv");
+const { userSocketId } = require("../../store/socketStore.js");
 
 dotenv.config();
 
@@ -233,7 +234,7 @@ exports.createOrder = async (req, res, next) => {
     const { cartItems, resDetail, paymentId, paymentStatus, totalPayment } =
       req.body;
 
-    const order = await Order.create({
+    let order = await Order.create({
       resDetail,
       cartItems,
       user: user._id,
@@ -243,11 +244,13 @@ exports.createOrder = async (req, res, next) => {
       totalPayment,
     });
 
+    order = await Order.findById(order._id)
+      .populate("resDetail")
+      .populate("cartItems.food");
+
     const io = req.app.get("io");
 
     if (io) {
-      console.log("server");
-
       io.emit("create-order", order);
     }
 
@@ -264,13 +267,25 @@ exports.createOrder = async (req, res, next) => {
 exports.cancelOrder = async (req, res, next) => {
   try {
     const { orderId } = req.params;
-    const order = await Order.findOne({ _id: orderId, user: req.user });
+    const order = await Order.findOne({ _id: orderId, user: req.user })
+      .populate("resDetail")
+      .populate("cartItems.food");
 
     if (!order)
       return res.status(401).json({ success: false, error: "order not found" });
 
     order.status = "Canceled";
     await order.save();
+
+    const io = req.app.get("io");
+
+    if (io) {
+      io.emit("user-status-cancel", order);
+      io.to(userSocketId.get(order.user.toString())).emit(
+        "order-status-updated",
+        order
+      );
+    }
 
     return res.status(200).json({ success: true, message: "Order Cancelled" });
   } catch (error) {

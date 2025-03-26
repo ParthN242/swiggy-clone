@@ -11,7 +11,7 @@ const OrderCard = ({ order }) => {
 
   const currentDate = new Date().toISOString();
   const timeSpent = moment(currentDate).diff(moment(createdAt), "seconds");
-  const cancelTime = 10;
+  const cancelTime = 20;
   const [timeLeft, setTimeLeft] = useState(cancelTime - timeSpent);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const OrderCard = ({ order }) => {
           <div className="w-full">
             {/* Status */}
             {status === "Confirmed" ? (
-              <button className="bg-cyan-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs max-md:text-xs mb-4">
+              <button className="bg-cyan-500 w-full py-2 px-4 max-md:py-2 max-md:px-3 rounded-lg text-white text-[14px] max-md:text-xs mb-4">
                 Confirming
               </button>
             ) : status === "Preparing" ? (

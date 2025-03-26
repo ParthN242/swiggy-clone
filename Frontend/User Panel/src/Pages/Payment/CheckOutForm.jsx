@@ -1,9 +1,6 @@
-import React from "react";
 import {
-  CardElement,
   useElements,
   useStripe,
-  PaymentElement,
   CardNumberElement,
   CardCvcElement,
   CardExpiryElement,
@@ -79,7 +76,7 @@ const CheckOutForm = () => {
           paymentStatus: result.paymentIntent.status,
           totalPayment,
         });
-        navigate("/");
+        navigate("/my-account/orders");
         dispatch(clearCart());
         // toast.success("Payment successful!");
       } else {

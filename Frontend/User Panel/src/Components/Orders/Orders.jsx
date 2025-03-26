@@ -12,7 +12,6 @@ const Orders = () => {
   const { user } = useSelector((state) => state.app);
 
   const [orders, setOrders] = useState([]);
-  console.log("orders: ", orders);
 
   useEffect(() => {
     const fetchMyOrders = async () => {
@@ -31,8 +30,6 @@ const Orders = () => {
     if (!socket) return;
 
     socket.on("order-status-updated", (updatedOrder) => {
-      console.log("status update");
-
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === updatedOrder._id
@@ -68,10 +65,6 @@ const Orders = () => {
         {orders.map((order) => (
           <OrderCard key={order._id} order={order} />
         ))}
-        {/* {orders.map((order, index) => {
-          if (index > 0) return;
-          return <OrderCard key={order._id} order={order} />;
-        })} */}
       </div>
     </div>
   );
