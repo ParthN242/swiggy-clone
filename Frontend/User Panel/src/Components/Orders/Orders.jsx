@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import OrderCard from "../OrderCard/OrderCard";
-import { useSocket } from "../../Conetext/SocketIo";
+import { useSocket } from "../../Context/SocketIo";
 
 const Orders = () => {
   const navigate = useNavigate();

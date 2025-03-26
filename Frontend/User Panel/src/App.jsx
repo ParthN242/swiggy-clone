@@ -17,7 +17,7 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import Search from "./Pages/Search/Search";
-import { useSocket } from "./Conetext/SocketIo";
+import { useSocket } from "./Context/SocketIo";
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
