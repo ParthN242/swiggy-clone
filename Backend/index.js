@@ -14,14 +14,32 @@ const { userSocketId } = require("./store/socketStore.js");
 dotenv.config();
 const app = express();
 
-const server = http.createServer(app);
-
-const isProduction = process.env.NODE_ENV === "production";
-
 const allowedOrigins = [
   "https://swiggy-clone-user.vercel.app",
   "https://swiggy-clone-admin.vercel.app",
 ];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    preflightContinue: true,
+    optionsSuccessStatus: 204,
+    credentials: true,
+  })
+);
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+const server = http.createServer(app);
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const io = socketIo(server, {
   cors: {
@@ -52,24 +70,6 @@ io.on("connection", (socket) => {
     console.log("socket disconnected");
   });
 });
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    preflightContinue: true,
-    optionsSuccessStatus: 204,
-    credentials: true,
-  })
-);
-app.use(bodyParser.json());
-app.use(cookieParser());
 
 // Database Connection
 dbConnection();
