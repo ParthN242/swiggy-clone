@@ -81,5 +81,3 @@ app.use((err, req, res, next) => {
 server.listen(4000, () => {
   console.log("Server Ported on 4000");
 });
-
-module.exports = { userSocketId };
