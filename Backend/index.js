@@ -22,9 +22,11 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log("Incoming request from:", origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("Blocked Origin:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
@@ -44,9 +46,11 @@ const isProduction = process.env.NODE_ENV === "production";
 const io = socketIo(server, {
   cors: {
     origin: function (origin, callback) {
+      console.log("Incoming request from:", origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("Blocked Origin:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
