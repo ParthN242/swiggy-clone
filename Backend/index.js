@@ -21,8 +21,16 @@ const allowedOrigins = [
 
 const isProduction = process.env.NODE_ENV === "production";
 
-app.use(
-  cors({
+// CORS Configuration
+const corsOptions = {
+  origin: isProduction ? allowedOrigins : "*", // Ensure correct format
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Authorization", "Content-Type"],
+  credentials: true,
+};
+
+/* 
+ cors({
     origin: isProduction ? allowedOrigins : true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     allowedHeaders: ["Authorization", "Content-Type"],
@@ -30,19 +38,16 @@ app.use(
     optionsSuccessStatus: 204,
     credentials: true,
   })
-);
+*/
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 const server = http.createServer(app);
 
 const io = socketIo(server, {
-  cors: {
-    origin: isProduction ? allowedOrigins : true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
-    allowedHeaders: ["Authorization", "Content-Type"],
-    credentials: true,
-  },
+  cors: corsOptions,
 });
 
 app.set("io", io);
@@ -77,6 +82,7 @@ app.use("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
+  console.error("Error:", err.message);
   res
     .status(err.statusCode || 500)
     .json({ success: false, message: err.message || "internal server error" });
