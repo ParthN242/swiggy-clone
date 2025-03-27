@@ -88,9 +88,17 @@ const FoodForm = ({ foodData, submitHandler, resId }) => {
             icon={<MdOutlineNoFood />}
             placeholder={""}
             options={[
-              { label: "Veg", value: true },
-              ...(resDetail?.isVeg !== "veg"
+              ...(resDetail?.isVeg === "veg"
+                ? [{ label: "Veg", value: true }]
+                : []),
+              ...(resDetail?.isVeg === "non-veg"
                 ? [{ label: "Non-Veg", value: false }]
+                : []),
+              ...(resDetail?.isVeg === "both"
+                ? [
+                    { label: "Veg", value: true },
+                    { label: "Non-Veg", value: false },
+                  ]
                 : []),
             ]}
           />

@@ -2,22 +2,9 @@ import { useState } from "react";
 import DeleteModel from "../DeleteModel/DeleteModel";
 import { MdStars, MdOutlineEdit, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 const RestaurantCard = ({ res, onDelete }) => {
   const [openDeleteModel, setOpenDeleteModel] = useState(false);
-
-  // const deleteRestaurant = async () => {
-  //   try {
-  //     await axios.delete(`/restaurant/${res._id}`);
-  //     toast.success("Restaurant deleted successfully");
-  //   } catch (error) {
-  //     console.log("error: ", error);
-  //     toast.error("Error while deleting restaurant");
-  //   }
-  //   setOpenDeleteModel(false);
-  // };
 
   return (
     <div className="rounded-xl shadow-lg ">

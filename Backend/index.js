@@ -15,22 +15,17 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  "https://swiggy-clone-user.vercel.app",
-  "https://swiggy-clone-admin.vercel.app",
+  "https://swiggy-clone-user.vercel.app/",
+  "https://swiggy-clone-admin.vercel.app/",
 ];
+
+const isProduction = process.env.NODE_ENV === "production";
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      console.log("Incoming request from:", origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("Blocked Origin:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: isProduction ? allowedOrigins : true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: ["Authorization", "Content-Type"],
     preflightContinue: true,
     optionsSuccessStatus: 204,
     credentials: true,
@@ -41,20 +36,10 @@ app.use(cookieParser());
 
 const server = http.createServer(app);
 
-const isProduction = process.env.NODE_ENV === "production";
-
 const io = socketIo(server, {
   cors: {
-    origin: function (origin, callback) {
-      console.log("Incoming request from:", origin);
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("Blocked Origin:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST"],
+    origin: isProduction ? allowedOrigins : true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
     allowedHeaders: ["Authorization", "Content-Type"],
     credentials: true,
   },

@@ -1,16 +1,32 @@
 import { useEffect, useState } from "react";
 import AdminHeader from "../Header/AdminHeader";
-import { MdStars } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { MdDelete, MdOutlineEdit, MdStars } from "react-icons/md";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Item from "./Item";
 import { FaCircle } from "react-icons/fa";
+import DeleteModel from "../DeleteModel/DeleteModel";
+import { toast } from "react-toastify";
 
 const RestaurantDetail = () => {
   const { resId } = useParams();
+  const navigate = useNavigate();
 
   const [resDetail, setResDetail] = useState({});
   const [loading, setLoading] = useState(true);
+  const [openDeleteModel, setOpenDeleteModel] = useState(false);
+
+  const deleteRestaurant = async (resId) => {
+    try {
+      await axios.delete(`/restaurant/${resId}`);
+      toast.success("Restaurant deleted successfully");
+
+      navigate("/restaurant");
+    } catch (error) {
+      console.log("error: ", error);
+      toast.error("Error while deleting restaurant");
+    }
+  };
 
   useEffect(() => {
     const fetchRestaurantDetail = async () => {
@@ -152,12 +168,26 @@ const RestaurantDetail = () => {
               </div>
             </div>
             {/* image */}
-            <div className="w-[30%] max-sm:w-[100%]">
+            <div className="relative w-[30%] max-sm:w-[100%]">
               <img
                 src={resDetail.image}
                 alt={resDetail.name}
                 className="w-full aspect-square max-sm:h-[150px] object-cover rounded-3xl shadow-lg"
               />
+              <div className="absolute bottom-0 right-0 flex items-center justify-end gap-2 mt-4 max-sm:mt-2.5 p-3 pt-0">
+                <Link
+                  to={`/updateRestaurant/${resId}`}
+                  className="p-2 max-sm:p-1.5  bg-yellow-400 rounded-full"
+                >
+                  <MdOutlineEdit className="text-lg max-sm:text-base text-white" />
+                </Link>
+                <div
+                  className="p-2 max-sm:p-1.5 bg-red-500 rounded-full cursor-pointer"
+                  onClick={() => setOpenDeleteModel(true)}
+                >
+                  <MdDelete className="text-lg max-sm:text-base text-white" />
+                </div>
+              </div>
             </div>
           </div>
           {/* Menu */}
@@ -186,6 +216,12 @@ const RestaurantDetail = () => {
             </div>
           </div>
         </div>
+      )}
+      {openDeleteModel && (
+        <DeleteModel
+          setOpenDeleteModel={setOpenDeleteModel}
+          deleteHandler={() => deleteRestaurant(resId)}
+        />
       )}
     </div>
   );

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Login from "./Pages/Login/Login";
 import Home from "./Pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "./Utils/ProtectedRoute";
