@@ -15,17 +15,16 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  "https://swiggy-clone-user.vercel.app/",
-  "https://swiggy-clone-admin.vercel.app/",
+  "https://swiggy-clone-user.vercel.app",
+  "https://swiggy-clone-admin.vercel.app",
 ];
 
 const isProduction = process.env.NODE_ENV === "production";
+// console.log("isProduction: ", isProduction);
 
 // CORS Configuration
 const corsOptions = {
-  origin:
-    // isProduction ? allowedOrigins :
-    true, // Ensure correct format
+  origin: isProduction ? allowedOrigins : true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
   credentials: true,

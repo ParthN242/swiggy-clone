@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "../Header/AdminHeader";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -14,8 +14,12 @@ const UpdateFood = () => {
   const [loading, setLoading] = useState(true);
 
   const updateFoodHandler = async (foodData, e) => {
-    console.log("foodData: ", foodData);
+    // console.log("foodData: ", foodData);
     e.preventDefault();
+    if (!foodData.image) {
+      toast.error("Please select an image");
+      return;
+    }
     try {
       const updateFoodPromise = axios.put(
         `/restaurant/food/${foodId}`,
@@ -49,7 +53,7 @@ const UpdateFood = () => {
       }
     };
     fetchFoodItem();
-  }, []);
+  }, [foodId]);
 
   return (
     <section className="flex flex-col">

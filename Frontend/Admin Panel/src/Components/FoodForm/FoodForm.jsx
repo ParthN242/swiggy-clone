@@ -113,6 +113,7 @@ const FoodForm = ({ foodData, submitHandler, resId }) => {
               value={cuisines || ""}
               onChange={(e) => setCuisines(e.target.value)}
               required
+              autoComplete
             />
           </div>
           {/* Description */}

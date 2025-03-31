@@ -24,6 +24,7 @@ const InputFiled = ({
           value={inputValue || ""}
           onChange={(e) => setInputValue(e.target.value)}
           required
+          autoComplete
         />
       )}
 
