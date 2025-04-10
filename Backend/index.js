@@ -26,8 +26,8 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // CORS Configuration
 const corsOptions = {
-  // origin: isProduction ? allowedOrigins : true,
-  origin: allowedOrigins,
+  origin: isProduction ? allowedOrigins : true,
+  // origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
   credentials: true,
