@@ -16,6 +16,16 @@ const Login = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
+    if (!email && !password) {
+      toast.error("Please enter email and password");
+      return;
+    } else if (!email) {
+      toast.error("Please enter email ");
+      return;
+    } else if (!password) {
+      toast.error("Please enter password");
+      return;
+    }
     try {
       const { data } = await axios.post("/auth/login", { email, password });
       toast.success("Login successful");
@@ -62,7 +72,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 id="email"
-                required
+                // required
                 placeholder="E-mail"
                 className="border-b border-slate-500 p-2 w-full outline-none"
                 autoComplete="off"
@@ -75,7 +85,7 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="password"
-                required
+                // required
                 placeholder="password"
                 className="border-b border-slate-500 p-2 w-full outline-none"
                 autoComplete="off"

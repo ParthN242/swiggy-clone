@@ -10,6 +10,23 @@ const SignUp = ({ setIsLogin }) => {
 
   const signUpHandler = async (e) => {
     e.preventDefault();
+    if (!email && !password && !name) {
+      toast.error("Please enter email, password, name");
+      return;
+    } else if (!name) {
+      toast.error("Please enter name ");
+      return;
+    } else if (!email) {
+      toast.error("Please enter email ");
+      return;
+    } else if (!password) {
+      toast.error("Please enter password");
+      return;
+    }
+    // else if (password.length < 8) {
+    //   toast.error("Password must contain at least 8 characters");
+    //   return;
+    // }
     try {
       await axios.post("/auth/signUp", {
         name,

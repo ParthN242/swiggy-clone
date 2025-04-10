@@ -20,6 +20,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendResetPasswordEmail = async (receiverEmail, resetPasswordUrl) => {
+  console.log("resetPasswordUrl: ", resetPasswordUrl);
   try {
     const info = await transporter.sendMail({
       from: {

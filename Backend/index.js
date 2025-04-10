@@ -17,6 +17,8 @@ const app = express();
 const allowedOrigins = [
   "https://swiggy-clone-user.vercel.app",
   "https://swiggy-clone-admin.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:5174",
 ];
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -24,7 +26,8 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // CORS Configuration
 const corsOptions = {
-  origin: isProduction ? allowedOrigins : true,
+  // origin: isProduction ? allowedOrigins : true,
+  origin: allowedOrigins,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Authorization", "Content-Type"],
   credentials: true,
@@ -47,9 +50,7 @@ app.use(cookieParser());
 
 const server = http.createServer(app);
 
-const io = socketIo(server, {
-  cors: corsOptions,
-});
+const io = socketIo(server, corsOptions);
 
 app.set("io", io);
 
